@@ -63,8 +63,6 @@ void DynamicArray::addEntry(int newEntry)
     newArray[size++] = newEntry;
 }
 
-
-
 // Retrieve the element at a given index
 int DynamicArray::getEntry(int index)
 {
@@ -75,7 +73,6 @@ int DynamicArray::getEntry(int index)
   }
   return dynamicArray[index];
 }
-
 
 int main()
 {
