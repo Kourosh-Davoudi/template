@@ -94,7 +94,7 @@ int main()
   return 0;
 }
 ```
-After revising the class definition to a template, you can test your class using the following main:
+After changing the class definition to a class template, you can test your class using the following main:
 ```C++
 int main()
 {
