@@ -1,112 +1,121 @@
-## Class Review 1
+## Class Template
 
 Learning outcomes highlights: 
-- implementing member functions
-- implementing friend functions
-- overloading operators
+- defining  a class template 
+- understanding the syntax of member functions
+- recognizing the flexibility of a class template 
 
-**Problem:** The Circle class is implemented to hold a circle information. The constructor job is to initialize the objects of the class. Read the program carefully and write appropriate statements as described by comments.
+**Problem:** The DynamicArray class is written to holds a list of integer. Change the class to a template class in order to work with other types as well. For example, the class can holds a list of string, double and etc.
 
 ```C++
+#include <string>
+#include <cstdlib>
 #include <iostream>
 using namespace std;
 
-class Circle {
-  private:  
-    int x,y;      // center of circle
-    double r;    // radius of circle
+class DynamicArray 
+{
+public:
+  DynamicArray();
+  ~DynamicArray();
+  void addEntry(int newEntry);
+  int getEntry(int index);
+  int getSize();
 
-  public:
-   
-    Circle(int =0,int=0, double =1.0);
-    void print() const;
-    double area() const;
-
-    double operator+(const Circle &) const;
-
-    Circle & operator++();
-    Circle operator++(int);
-
-  friend ostream & operator<<(ostream &out, const Circle &);
-  friend istream & operator>>(istream &in, Circle &);
+private:
+  int *dynamicArray;
+  int size;
 };
 
-Circle::Circle(int x,int y, double r)
+DynamicArray::DynamicArray()
 {
-  // Initialize the object here
+  dynamicArray = nullptr;
+  size = 0;
 }
 
-double Circle::area() const {
-  // Return the area of a circle  
-}
 
-double Circle::operator+(const Circle & c) const
+DynamicArray::~DynamicArray()
 {
-   // + Return the area of two circles  
-
+  if (dynamicArray != nullptr)
+    delete[] dynamicArray;
 }
 
-Circle & Circle::operator++()
+int DynamicArray::getSize()
 {
-  // Increment the radius by 1
-
-  return *this;
+  return size;
 }
 
-Circle Circle::operator++(int)
+// Adds an entry to the dynamic array. 
+void DynamicArray::addEntry(int newEntry)
 {
-  Circle temp = *this;
-  
-  //increment the radius by 1
-
-  return temp;
+    // Create a new array, copy the contents of the old array, then delete it
+    int *newArray = new int[size + 1];
+    for (int i = 0; i < size; i++)
+    {
+    newArray[i] = dynamicArray[i];
+    }
+    
+    delete[] dynamicArray;
+    
+    dynamicArray = newArray;
+    
+    // Add the new entry and increment the size
+    newArray[size++] = newEntry;
 }
 
-ostream & operator<<(ostream &out, const Circle &c)
+
+
+// Retrieve the element at a given index
+int DynamicArray::getEntry(int index)
 {
+  if ((index < 0) || (index >= size)){
+    cout << "Out of the index !" << endl;
+    return 0;
 
-  // print a circle in the out stream (the format is the same as print())
-  return out;
+  }
+  return dynamicArray[index];
 }
-
-istream & operator>>(istream &in, Circle &c)
-{
- 
- // Read a circle information form the in stream
-
-  return in;
-}
-
-
-void Circle::print() const
-{
-  cout << "Circle =(" << x << "," << y << "," << r << ")" << endl;
-}
-
 
 
 int main()
 {
-  // Circle a;
-  // Circle b(2,3,3.0);
+  DynamicArray x;
 
-  // a.print();
-  // b.print();
+  // Adding entries
+  x.addEntry(7);
+  x.addEntry(5);
+  x.addEntry(4);
+  x.addEntry(2);
+  x.addEntry(8);
+
+  // Output entries
+  cout << "List:" << endl;
   
-  // cout << "The area a + b is: " << a+b << endl;
-  // ++a;
-  // a.print();
-
-  // a++;
-  // a.print();
-
-  // cout << a;
-
-  // cin >> a;
-  // cout <<a;
-
+  for (int i = 0; i < x.getSize(); i++)
+    cout << x.getEntry(i) << endl;
+  
   return 0;
-
 }
+```
+After revising the class definition to a template, you can test your class using the following main:
+```C++
+int main()
+{
+  DynamicArray<string> x;
 
+  // Adding entries
+  x.addEntry("Frank");
+  x.addEntry("Wiggum");
+  x.addEntry("Nahasapeemapetilon");
+  x.addEntry("Quimby");
+  x.addEntry("Flanders");
+
+  // Output entries
+  cout << "List:" << endl;
+  
+  for (int i = 0; i < x.getSize(); i++)
+    cout << x.getEntry(i) << endl;
+  
+  return 0;
+}
 ```
