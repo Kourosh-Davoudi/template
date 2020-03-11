@@ -5,7 +5,7 @@ Learning outcomes highlights:
 - understanding the syntax of member functions
 - recognizing the flexibility of a class template 
 
-**Problem:** The DynamicArray class is written to holds a list of integer. Change the class to a template class in order to work with other types as well. For example, the class can holds a list of string, double and etc.
+**Problem:** The <code>DynamicArray</code> class is written to holds a list of integer. Change the class to a template class in order to work with other types as well. For example, the class can holds a list of string, double and etc.
 
 ```C++
 #include <string>
